@@ -1,0 +1,3 @@
+class C extends Object {
+	Object 1badfield;
+}

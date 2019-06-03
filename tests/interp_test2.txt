@@ -1,0 +1,12 @@
+class A extends Object {}
+class B extends Object {}
+
+class Pair extends Object {
+	Object first;
+	Object second;
+	Pair setFirst(Object newFirst) { return new Pair(newFirst, this.second); }
+}
+
+class Triple extends Object {
+	Object third;
+}

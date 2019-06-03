@@ -1,0 +1,4 @@
+class C extends Object {
+	Object foo(Object x)
+		return x;
+}

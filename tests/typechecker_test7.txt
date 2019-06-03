@@ -1,0 +1,3 @@
+class A extends Object {
+	X foo(Object x) { return x; }	
+}

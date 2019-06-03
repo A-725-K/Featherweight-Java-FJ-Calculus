@@ -1,0 +1,6 @@
+class C extends Object {
+	Object x;
+
+	Object foo() { return this.x; }
+	Object foo(Object xx) { return xx; }
+}

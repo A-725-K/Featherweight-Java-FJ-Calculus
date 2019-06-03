@@ -1,0 +1,12 @@
+class C extends Object {
+	Object m() { return new C(); }
+}
+
+class D extends C {
+	Object m() { return new D(); }
+}
+
+class CPair extends Object {
+	C first;
+	C second;
+}

@@ -1,0 +1,5 @@
+class A extends Object {
+	Object o;
+	
+	Object foo(Object o1 Object o2) { return new Object(); }
+}

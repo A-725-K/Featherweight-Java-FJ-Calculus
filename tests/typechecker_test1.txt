@@ -1,0 +1,5 @@
+class X extends W {}
+class Y extends X {}
+class Z extends Y {}
+class W extends Z {}
+

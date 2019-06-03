@@ -1,0 +1,7 @@
+class C extends Object {
+	Object m() { return new C(); }
+}
+
+class D extends C {
+	Object m(Object x) { return new D(); }
+}

@@ -1,0 +1,28 @@
+class B extends Object {
+  Object o1;
+  Object o2;
+
+  Object first()  { return this.o1; }
+  Object second() { return this.o2; }
+  B freshB(Object fst, Object snd) { return new B(fst, snd); }
+}
+
+class A extends B {
+  Object oa;
+}
+
+class C extends Object {
+   B b;
+
+   C changeB(B newB) { return new C(newB); }
+}
+
+class D extends Object {
+  Object x;
+  F getF(F f) { return f; }
+}
+
+class E extends D {}
+class F extends Object {}
+class G extends Object {}
+

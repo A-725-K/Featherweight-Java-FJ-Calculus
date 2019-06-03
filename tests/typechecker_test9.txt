@@ -1,0 +1,7 @@
+class A extends Object {}
+class B extends Object {}
+
+class C extends Object {
+	A foo() { return new B(); }
+}
+

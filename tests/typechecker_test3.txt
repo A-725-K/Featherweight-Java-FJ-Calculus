@@ -1,0 +1,4 @@
+class A extends Object {
+	Object o;
+	Object o;
+}
