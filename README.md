@@ -47,6 +47,18 @@ and then following the instructions inside the program.
   </li>
 </ul>
 
+## Brief description of files
+<ul>
+  <li><b><i>MainFJ.hs</i></b>: the main of the interactive interpreter</li>
+  <li><b><i>MonadicParserFJ.hs</i></b>: all the parsers for the input</li>
+  <li><b><i>TypeCheckerFJ.hs</i></b>: functions related to typechecking</li>
+  <li><b><i>InterpreterFJ.hs</i></b>: interpreter ans substitution function</li>
+  <li><b><i>DataTypesFJ.hs</i></b>: all the user defined data types used in the program</li>
+  <li><b><i>UtilitiesFJ.hs</i></b>: a bunch of functions useful and some pre-loaded program for testing inside the interpreter</li>
+  <li><b><i>unit_test.sh</i></b>: definition of all unit testing</li>
+  <li><b><i>Makefile</i></b>: contains the real commands to compile the program and execute the tests</li>
+</ul>
+
 ## Author
 
 * **<i>Andrea Canepa</i>** - Computer Science, UNIGE - *Principles and Paradigms of Programming Languages a.y. 2018/2019*
