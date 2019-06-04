@@ -1,11 +1,12 @@
 CC        = ghc
-FLAGS     = --make
+MAKE      = --make
+FLAGS     = -O2
 EXE_NAME  = FJ_Interpreter.exe
 TEST_FILE = unit_test.sh
 MAIN_FILE = MainFJ.hs
 
 all: clean
-	$(CC) $(FLAGS) $(MAIN_FILE) -o $(EXE_NAME)
+	$(CC) $(MAKE) $(MAIN_FILE) -o $(EXE_NAME) $(FLAGS)
 	rm -rf *.hi
 	rm -rf *.o
 
