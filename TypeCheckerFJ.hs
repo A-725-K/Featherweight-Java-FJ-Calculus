@@ -42,10 +42,10 @@ typeCheck (FieldAccess e f) cTable context =
             Nothing -> Left (ClassNotFoundException ("Class " ++ t' ++ " not found!"))
             Just c' ->
               let fds = fields c' cTable in
-                let idx = isInFields f fds 0 in
-                  case idx of
-                    Nothing   -> Left (FieldNotFoundException ("Field " ++ f ++ " not found!"))
-                    Just idx' -> Right (fst (fds !! idx'))
+              let idx = isInFields f fds 0 in
+                case idx of
+                  Nothing   -> Left (FieldNotFoundException ("Field " ++ f ++ " not found!"))
+                  Just idx' -> Right (fst (fds !! idx'))
 ;;
 
 -- T-New
@@ -117,7 +117,7 @@ typeCheckMethod (MethodDecl retType mName params exp) c cTable =
 
 -- check all methods in a class
 checkAllMethods :: MDS -> Class -> ClassTable -> Either Exception ()
-checkAllMethods [] _ _ = Right ();;
+checkAllMethods [] _ _           = Right ();;
 checkAllMethods (m:mds) c cTable =
   case typeCheckMethod m c cTable of
     Left e -> Left e
@@ -158,7 +158,7 @@ typeCheckClass c cTable =
 
 -- typecheck the entire program
 typeCheckProg :: ClassTable -> ClassTable -> Either Exception ()
-typeCheckProg [] _ = Right ();;
+typeCheckProg [] _          = Right ();;
 typeCheckProg (c:cs) cTable =
   case typeCheckClass c cTable of
     Left e -> Left e
@@ -168,7 +168,7 @@ typeCheckProg (c:cs) cTable =
 -- check the number and the type of parameter of a function (also contructor) invocation
 checkTypeAndNumberOfParams :: [Type] -> [Exp] -> ClassTable -> Context -> Either Exception Bool
 checkTypeAndNumberOfParams [] [] _ _     = Right True;;
-checkTypeAndNumberOfParams ts [] _ _    = Left (MismatchParamsException "Params does not match!");;
+checkTypeAndNumberOfParams ts [] _ _     = Left (MismatchParamsException "Params does not match!");;
 checkTypeAndNumberOfParams [] params _ _ = Left (MismatchParamsException "Params does not match!");;
 checkTypeAndNumberOfParams (tf:ts) (p:params) cTable context =
   let tf' = fromType tf in

@@ -53,7 +53,7 @@ reduce (Cast cl v) cTable
         Just st ->
           if st
           then Right (Just v)
-          else Left (ClassCastException "Cast not valid!")--Nothing
+          else Left (ClassCastException "Cast not valid!")
 ;;
 
 -- Cast
@@ -70,7 +70,7 @@ reduce (Cast c e) cTable =
 -- substitute params with their values and "this" with current class value
 reduce (MethodInv v m params) cTable
   | isVal v && allValues params =
-    let t  = typeCheck v cTable [] in
+    let t = typeCheck v cTable [] in
       case t of
         Left e   -> Left (RuntimeException "Dynamic type error !")
         Right t' ->
@@ -108,9 +108,9 @@ reduce (MethodInv e m params) cTable =
 -- substitution of a term
 subst :: Exp -> [Exp] -> [String] -> Maybe Exp
 subst (Variable x) params xs =
-    case isInParams x xs 0 of
-      Just x' -> Just (params !! x')
-      Nothing -> Nothing
+  case isInParams x xs 0 of
+    Just x' -> Just (params !! x')
+    Nothing -> Nothing
 ;;
 subst (FieldAccess e f) params xs =
   case subst e params xs of

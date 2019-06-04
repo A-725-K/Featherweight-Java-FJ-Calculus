@@ -24,7 +24,7 @@ make tests
 ```
 ./FJ_Interpreter.exe
 ```
-and then following the instructions inside the program.
+and then follow the instructions inside the program.
 
 ## How to use the *interactive interpreter*
 <ul>

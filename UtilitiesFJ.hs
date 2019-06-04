@@ -91,7 +91,7 @@ r = ClassDecl "R" "Object"
 s = ClassDecl "S" "R"
     []
     [
-      (MethodDecl (TypeDecl "Object") "m" [(TypeDecl "Object", "x")] (New "S" [])),
+      (MethodDecl (TypeDecl "Object") "m" [{-(TypeDecl "Object", "x")-}] (New "S" [])),
       (MethodDecl (TypeDecl "Object") "q" [] (New "R" []))
     ]
 ;;
@@ -198,6 +198,10 @@ fields c cTable =
       cf' -> (fields (getClass cf' cTable) cTable) ++ (classFields c)
 ;;
 
+-- given a list of method returns also the class in which is
+appendClass :: String -> [Method] -> [(Method, Type)]
+appendClass cname mds = map (\m -> (m, TypeDecl cname)) mds;;
+
 -- methods
 methods :: Class -> ClassTable -> MDS
 methods c cTable =
@@ -207,7 +211,6 @@ methods c cTable =
       cf' -> (classMethods c) ++ (methods (getClass cf' cTable) cTable)
 ;;
 -- alternative version: returns also the class in which the method is found
-appendClass cname mds = map (\m -> (m, TypeDecl cname)) mds;;
 methods' :: Class -> ClassTable -> [(Method, Type)]
 methods' c cTable =
   let cf = classFather c in
@@ -241,7 +244,7 @@ mtype c m cTable =
 
 -- check if a method is present in the list of methods
 checkMethods :: String -> [Method] -> Maybe ([Type], Type)
-checkMethods _ [] = Nothing;;
+checkMethods _ []                                        = Nothing;;
 checkMethods m ((MethodDecl retType mname params e):mds) =
   if m == mname
   then Just (fst (unzip params), retType)
@@ -250,7 +253,7 @@ checkMethods m ((MethodDecl retType mname params e):mds) =
 
 -- check if a field is in the fields of a class
 isInFields :: String -> FDS -> Int -> Maybe Int
-isInFields _ [] _ = Nothing;;
+isInFields _ [] _                = Nothing;;
 isInFields fname ((_, f):fs) acc =
   if fname == f
   then Just acc
@@ -259,7 +262,7 @@ isInFields fname ((_, f):fs) acc =
 
 -- check if a parameter is in the list of parameters in method
 isInParams :: String -> [String] -> Int -> Maybe Int
-isInParams _ [] _ = Nothing;;
+isInParams _ [] _           = Nothing;;
 isInParams pname (p:ps) acc =
   if pname == p
   then Just acc
@@ -317,7 +320,7 @@ allDifferent (x:xs) =
 -- check if there are two classes with the same name
 checkClassName    :: String -> ClassTable -> Bool
 checkClassNameAux :: String -> ClassTable -> Int -> Bool
-checkClassNameAux _ [] i = (i == 1);;
+checkClassNameAux _ [] i         = (i == 1);;
 checkClassNameAux cname (c:ct) i =
   let cn = className c in
     if cn == cname
@@ -328,7 +331,7 @@ checkClassName cname cTable = checkClassNameAux cname cTable 0;;
 
 -- check if a variable is typed in the context
 lookupContext :: String -> [(String, Type)] -> Maybe Type
-lookupContext _ [] = Nothing;;
+lookupContext _ []           = Nothing;;
 lookupContext v ((s, t):ctx) =
   if v == s
   then Just t
@@ -336,15 +339,15 @@ lookupContext v ((s, t):ctx) =
 ;;
 
 -- control types of fields
+checkFieldType  :: String -> ClassTable -> Bool
 checkFieldsType :: FDS -> ClassTable -> Either Exception ()
-checkFieldsType [] _ = Right ();;
+checkFieldsType [] _                 = Right ();;
 checkFieldsType ((tf, _):fds) cTable =
   let t = fromType tf in
   if checkFieldType t cTable
   then checkFieldsType fds cTable
   else Left (ClassNotFoundException ("Type " ++ t ++ " does not exists!"))
 ;;
-
 -- control if a type exists in a field declaration
 checkFieldType t cTable =
   case tryGetClass t cTable of
@@ -371,8 +374,8 @@ oneVsAll m1 (m2:mds) =
 ;;
 
 -- check if a signature of a method is correct in overriding
+checkSignature    :: [Method] -> Bool
 checkSignatureAux :: [Method] -> Int -> [Method] -> Bool
-checkSignature :: [Method] -> Bool
 checkSignatureAux [] _ _         = True;;
 checkSignatureAux (m:mds) i mdss =
   oneVsAll m (removeInListAt i mdss) &&
@@ -400,21 +403,21 @@ howManyOverrides (m:mds) mdss =
 
 -- returns the types from a list o parameters
 getTypesNames :: [(Type, String)] -> [String]
-getTypesNames [] = [];;
+getTypesNames []                   = [];;
 getTypesNames ((TypeDecl t, _):ps) = t:(getTypesNames ps);;
 
 -- equality between two methods
 methodsEq :: Method -> Method -> Bool
 methodsEq m1@(MethodDecl t1 mName1 params1 _) m2@(MethodDecl t2 mName2 params2 _) =
-  t1 == t2 &&
+  t1 == t2         &&
   mName1 == mName2 &&
   (getTypesNames params1) == (getTypesNames params2)
 ;;
 
 -- check overriding between methods
-checkOverrides :: [(String, [Int])] -> [Method] -> Bool
 checkOverride :: [Method] -> Bool
-checkOverrides [] _ = True;;
+checkOverrides :: [(String, [Int])] -> [Method] -> Bool
+checkOverrides [] _                 = True;;
 checkOverrides ((_, idxs):hmos) mds =
   checkSignature (getMethodsByIndexes idxs mds) &&
   checkOverrides hmos mds

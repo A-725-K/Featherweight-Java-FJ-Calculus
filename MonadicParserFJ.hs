@@ -63,7 +63,7 @@ instance Monad Parser where
   return    = pure
   p1 >>= p2 = Parser(\s ->
                        let p = parse p1 s in
-                       concat (map (\(c, cs) -> parse (p2 c) cs) p)
+                         concat (map (\(c, cs) -> parse (p2 c) cs) p)
                     )
   ;;
 ;;
@@ -71,10 +71,10 @@ instance Monad Parser where
 -- if a predicate on char is satisfied
 sat :: (Char -> Bool) -> Parser Char
 sat p = do
-  c <- item
+  c <- item;
   if p c
-    then return c
-    else failure
+  then return c
+  else failure
 ;;
 
 -- useful parsers
@@ -92,8 +92,8 @@ char c = sat (c==);;
 string :: String -> Parser String
 string ""     = return "";;
 string (c:cs) = do
-  x  <- char c
-  xs <- string cs
+  x  <- char c;
+  xs <- string cs;
   return (x:xs)
 ;;
 
@@ -130,7 +130,7 @@ varname = do
 
 -- apply a parser and then a parser for a delimiter many times
 separate_by, separate_by1 :: Parser a -> Parser b -> Parser [a]
-separate_by p sep  = (p `separate_by1` sep) +++ return [];;
+separate_by  p sep = (p `separate_by1` sep) +++ return [];;
 separate_by1 p sep = do
   a  <- p;
   as <- many (do {sep; p});
