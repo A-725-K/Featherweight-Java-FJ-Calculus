@@ -2,7 +2,7 @@
 Implementation of an interactive interpreter for the calculus Featherweight Java.
 
 ## Info
-This project was entirely developed under *Parrot OS* operating system, in *GNU-Emacs* text-editor, with the well-known softwaer engineering technique *Test First*. The aim of this project is part of the exam *Principles and Paradigms of Programming Languages* that took place at the *University of Genoa*, during the second semester of the academic year 2018/2019 for the Master Degree in *Computer Science*. The code is written in **Haskell** with the only exception of the tests, since they are written in **Bash**.
+This project was entirely developed under *Parrot OS* operating system, in *GNU-Emacs* text-editor, with the well-known software engineering technique *Test First*. The aim of this project is part of the exam *Principles and Paradigms of Programming Languages* that took place at the *University of Genoa*, during the second semester of the academic year 2018/2019 for the Master Degree in *Computer Science*. The code is written in **Haskell** with the only exception of the tests, since they are written in **Bash**.
 
 ## Getting started
 First of all you have to clone or download this repository, with the command:
@@ -58,6 +58,17 @@ and then follow the instructions inside the program.
   <li><b><i>unit_test.sh</i></b>: definition of all unit testing</li>
   <li><b><i>Makefile</i></b>: contains the real commands to compile the program and execute the tests</li>
 </ul>
+
+## Grammar
+```haskell
+p   ::= cd_1 ... cd_n
+cd  ::= class C extends C' { fds mds }
+fds ::= fd_1 ... fd_n
+fd  ::= C f;
+mds ::= md_1 ... md_n
+md  ::= C_0 m(C_1 x_1, ..., C_n x_n) { return e; }
+e   ::= x | e.f | e_0.m(e_1, ..., e_n) | new C(e_1, ..., e_n) | (C)e | ( e )
+```
 
 ## Author
 
