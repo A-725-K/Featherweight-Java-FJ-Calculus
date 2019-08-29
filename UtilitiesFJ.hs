@@ -194,7 +194,7 @@ fields :: Class -> ClassTable -> FDS
 fields c cTable =
   let cf = classFather c in
     case cf of
-      "" -> []
+      ""  -> []
       cf' -> (fields (getClass cf' cTable) cTable) ++ (classFields c)
 ;;
 
@@ -401,7 +401,7 @@ howManyOverrides (m:mds) mdss =
     else howManyOverrides mds mdss
 ;;
 
--- returns the types from a list o parameters
+-- returns the types from a list of parameters
 getTypesNames :: [(Type, String)] -> [String]
 getTypesNames []                   = [];;
 getTypesNames ((TypeDecl t, _):ps) = t:(getTypesNames ps);;
