@@ -71,7 +71,7 @@ typeCheck (Cast cname exp) cTable context =
           Nothing -> Left (ClassNotFoundException ("Class " ++ tt ++ " not found!"))
           Just c  ->
             case tryGetClass cname cTable of
-              Nothing -> Left (ClassNotFoundException ("Class " ++ tt ++ " not found!"))
+              Nothing -> Left (ClassNotFoundException ("Class " ++ cname ++ " not found!"))
               Just c' ->
                 -- T-UpCast
                 case subtype c c' cTable of
